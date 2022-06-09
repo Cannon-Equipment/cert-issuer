@@ -1,61 +1,25 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
 metadata:
-  name: {{ include "cert-manager-issuer.fullname" . }}
-  labels:
-    {{- include "cert-manager-issuer.labels" . | nindent 4 }}
+  name: {{.Values.name }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
-  selector:
-    matchLabels:
-      {{- include "cert-manager-issuer.selectorLabels" . | nindent 6 }}
-  template:
-    metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      labels:
-        {{- include "cert-manager-issuer.selectorLabels" . | nindent 8 }}
-    spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "cert-manager-issuer.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+  acme:
+    email: {{.Values.acme.email}}
+    server: {{.Values.acme.server}}
+    privateKeySecretRef:
+      name: {{.Values.acme.privateKeySecretRef.name}}
+    solvers:
+    # this solver handles example.org challenges
+    # and uses explicit credentials
+    - selector:
+        dnsZones:
+          {{ toYaml .Values.solvers.dnsZones }}
+      dns01:
+        route53:
+          region: {{.Values.solvers.dns01.route53.region }}
+          accessKeyID: {{ .Values.solvers.dns01.route53.accessKeyID }}
+          secretAccessKeySecretRef:
+            name: {{ .Values.solvers.dns01.route53.secretAccessKeySecretRef.name }}
+            key: {{ .Values.solvers.dns01.route53.secretAccessKeySecretRef.key }}
+          # you can also assume a role with these credentials
+          #role: arn:aws:iam::YYYYYYYYYYYY:role/dns-manager
