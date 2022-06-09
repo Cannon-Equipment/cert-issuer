@@ -3,12 +3,12 @@ entries:
   cert-manager-issuer:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2022-06-09T12:28:12.222552-04:00"
+    created: "2022-06-09T16:41:21.346731-04:00"
     description: A Helm chart for Kubernetes
     digest: 402f7c74c4b1db5d0d1427966fad40a2e0fd2dbef9327fa5061c482394ad80ed
     name: cert-manager-issuer
     type: application
     urls:
-    - https://cannon-equipment/github.io/cert-issuer/cert-manager-issuer-0.1.0.tgz
+    - https://cannon-equipment.github.io/cert-issuer/cert-manager-issuer-0.1.0.tgz
     version: 0.1.0
-generated: "2022-06-09T12:28:12.22174-04:00"
+generated: "2022-06-09T16:41:21.343359-04:00"
