@@ -16,10 +16,14 @@ spec:
           {{ toYaml .Values.solvers.dnsZones }}
       dns01:
         route53:
-          region: {{.Values.solvers.dns01.route53.region }}
-          accessKeyID: {{ .Values.solvers.dns01.route53.accessKeyID }}
+          {{ with $.Values.solvers.dns01.route53}}
+          region: {{ .region }}
+          {{ if .hostedZoneId }}
+          hostedZoneId: {{ .hostedZoneId}}
+          {{ end }}
+          accessKeyID: {{ .accessKeyID }}
           secretAccessKeySecretRef:
-            name: {{ .Values.solvers.dns01.route53.secretAccessKeySecretRef.name }}
-            key: {{ .Values.solvers.dns01.route53.secretAccessKeySecretRef.key }}
+            name: {{ .secretAccessKeySecretRef.name }}
+            key: {{ .secretAccessKeySecretRef.key }}
           # you can also assume a role with these credentials
           #role: arn:aws:iam::YYYYYYYYYYYY:role/dns-manager
