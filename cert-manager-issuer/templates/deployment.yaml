@@ -13,14 +13,9 @@ spec:
         dnsZones:
           {{ toYaml .Values.solvers.dnsZones }}
       dns01:
+        {{- if $.Values.solvers.dns01.route53 }}
         route53:
           {{- with $.Values.solvers.dns01.route53 }}
-          region: {{- .region }}
-          {{- if .hostedZoneId }}
-          hostedZoneId: {{- .hostedZoneId }}
+          {{ toYaml . | indent 4 }}
           {{- end }}
-          accessKeyID: {{ .accessKeyID }}
-          secretAccessKeySecretRef:
-            name: {{ .secretAccessKeySecretRef.name }}
-            key: {{ .secretAccessKeySecretRef.key }}
           {{- end }}
