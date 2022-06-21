@@ -15,7 +15,12 @@ spec:
       dns01:
         {{- if $.Values.solvers.dns01.route53 }}
         route53:
-          {{- with $.Values.solvers.dns01.route53 }}
-          {{ toYaml . | indent 4 }}
+          region: {{ $.Values.solvers.dns01.route53.region }}
+          {{- if $.Values.solvers.dns01.route53.hostedZoneId }}
+          hostedZoneId: {{ $.Values.solvers.dns01.route53.hostedZoneId }}
           {{- end }}
-          {{- end }}
+          accessKeyID: {{ $.Values.solvers.dns01.route53.accessKeyID }}
+          secretAccessKeySecretRef:
+            name: {{ $.Values.solvers.dns01.route53.secretAccessKeySecretRef.name }}
+            key: {{ $.Values.solvers.dns01.route53.secretAccessKeySecretRef.key }}
+            {{ end }}
