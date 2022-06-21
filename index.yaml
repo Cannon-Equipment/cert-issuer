@@ -2,8 +2,18 @@ apiVersion: v1
 entries:
   cert-manager-issuer:
   - apiVersion: v2
+    appVersion: 0.1.2
+    created: "2022-06-21T11:52:07.59643-04:00"
+    description: Helm Chart for Lets Encrypt Issuer
+    digest: 0f6f6f675b63419e23411f098a8930d010e844a7ec64215018a10e1f00e92a0c
+    name: cert-manager-issuer
+    type: application
+    urls:
+    - https://cannon-equipment.github.io/cert-issuer/cert-manager-issuer-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
     appVersion: 0.1.0
-    created: "2022-06-21T11:47:17.26009-04:00"
+    created: "2022-06-21T11:52:07.596146-04:00"
     description: A Helm chart for Kubernetes
     digest: e229ac9c22ba395e18dc4e311d10464d4ac41f2946c630660e81b6eb273f78a3
     name: cert-manager-issuer
@@ -13,7 +23,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2022-06-21T11:47:17.259341-04:00"
+    created: "2022-06-21T11:52:07.595869-04:00"
     description: A Helm chart for Kubernetes
     digest: 402f7c74c4b1db5d0d1427966fad40a2e0fd2dbef9327fa5061c482394ad80ed
     name: cert-manager-issuer
@@ -21,4 +31,4 @@ entries:
     urls:
     - https://cannon-equipment.github.io/cert-issuer/cert-manager-issuer-0.1.0.tgz
     version: 0.1.0
-generated: "2022-06-21T11:47:17.258122-04:00"
+generated: "2022-06-21T11:52:07.595391-04:00"
